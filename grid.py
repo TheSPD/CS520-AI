@@ -8,7 +8,6 @@ Created on 03-Feb-2016
 import cell
 import pygame
 import random
-import main
 
 class grid(object):
     
@@ -34,14 +33,17 @@ class grid(object):
         """Return a cell object from row r and column c"""
         return self.Matrix[r][c]  
 
-    def printGrid(self):
+    def printGrid(self,start=(),goal=(),path=[]):
         """Prints grid in a window"""      
          
         # Define some colors
         BLACK = (0, 0, 0)
         WHITE = (255, 255, 255)
+        GREY = (50,50,50)
         GREEN = (0, 255, 0)
         RED = (255, 0, 0)
+        BLUE = (0,0,255)
+        YELLOW = (255,255,0)
  
         # This sets the WIDTH and HEIGHT of each grid location
         WIDTH = self.width
@@ -49,6 +51,9 @@ class grid(object):
  
         # This sets the margin between each cell
         MARGIN = self.margin
+ 
+        #List to hold the traveled path
+        travPath = []
  
         GRID_SIZE = self.size
         # Create a 2 dimensional array. A two dimensional
@@ -84,8 +89,6 @@ class grid(object):
         # Used to manage how fast the screen updates
         clock = pygame.time.Clock()
         
-        #Changes 10-02-16
-        path = main.astar()
         # -------- Main Program Loop -----------
         while not done:
             for event in pygame.event.get():  # User did something
@@ -101,23 +104,38 @@ class grid(object):
                 for column in range(GRID_SIZE):
                     color = WHITE
                     if grid[row][column] == 1:
-                        color = GREEN
-                    #Changes 10-02-16
-                    if([row+1,column+1] in path):
+                        color = GREY
+                    #Display the tarveled path
+                    if((row,column) in travPath):
                         color = RED
+                    if((row,column) == start):
+                        color = BLUE
+                    if((row,column) == goal):
+                        color=YELLOW
+                    
                     pygame.draw.rect(screen,
                              color,
                              [(MARGIN + WIDTH) * column + MARGIN,
                               (MARGIN + HEIGHT) * row + MARGIN,
                               WIDTH,
                               HEIGHT])
+            if(path):
+                (pathrow,pathcol) = path.pop(0)
+                travPath.append((pathrow,pathcol))
+                pygame.draw.rect(screen,
+                                 GREEN,
+                                 [(MARGIN + WIDTH) * pathcol + MARGIN,
+                                  (MARGIN + HEIGHT) * pathrow + MARGIN,
+                                  WIDTH,
+                         HEIGHT])
+            
             
             pygame.display.flip()
             
             # Limit to 60 frames per second
-            clock.tick(60)
+            clock.tick(2)
  
-        # Be IDLE friendly. If you forget this line, the program will 'hang'
+        # Be IDLE friendly.
         # on exit.
         pygame.quit()
 
