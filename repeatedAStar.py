@@ -23,6 +23,10 @@ def repeatedAStar(origMap,start,goal):
             #Calculate best path as per available input
             bestPath = aStarPath.aStar(agentMap, agentPos, goal)
             
+            #If no path is available
+            if(not bestPath):
+                return None
+            
             #Traverse 1 step in the direction
             l = len(bestPath)-2
             (pathStepX,pathStepY) = bestPath[l]
