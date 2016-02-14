@@ -32,6 +32,7 @@ def aStar(grid,start,goal):
     f_score[(start.row,start.column)] = heuristic((start.row,start.column), (goal.row,goal.column))
     
     while not openSet.empty():
+        
         (current_row,current_column) = openSet.get()
         if current_row == goal.row and current_column == goal.column :
             return reconstruct_path(cameFrom, (goal.row,goal.column))
@@ -43,9 +44,7 @@ def aStar(grid,start,goal):
             
             tentative_g_score = g_score[(current_row,current_column)] + heuristic((neighbor.row,neighbor.column),(current_row,current_column)) 
             if (neighbor.row,neighbor.column) not in openSet.elements:
-                if(grid.getCell(neighbor.row,neighbor.column).isBlocked()):
-                    openSet.put((neighbor.row,neighbor.column), float("inf"))
-                else:
+                if(not grid.getCell(neighbor.row,neighbor.column).isBlocked()):
                     openSet.put((neighbor.row,neighbor.column), tentative_g_score + heuristic((neighbor.row,neighbor.column), (goal.row,goal.column)) + 1/(tentative_g_score))
             elif tentative_g_score > g_score[(neighbor.row,neighbor.column)]:
                 continue
