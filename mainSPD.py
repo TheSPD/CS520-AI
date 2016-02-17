@@ -12,6 +12,8 @@ import aStarPath
 from mhlib import PATH
 import priorityQueue
 import repeatedAStar
+import repeatedBackwardAStar
+import repeatedAdaptiveAStar
 import heapq
 
 import time
@@ -72,7 +74,7 @@ f.close()
 start = cell.cell(0,0)
 goal = cell.cell(0,0)
 
-#print g.getCell(2,7).isBlocked() #75,90
+#print g.getCell(2,7).isBlocked() #75,90 
 
 # For 101x101
 start = cell.cell(10,4)
@@ -89,23 +91,31 @@ goal = cell.cell(75,90)
 
 t0 = time.time()
 path=[]
-#path = aStarPath.aStar(g, start, goal)
-path = repeatedAStar.repeatedAStar(g, start, goal)
+#path,expCells = aStarPath.aStar(g, start, goal)
+
+#Forward A Star
+path,expCells = repeatedAStar.repeatedAStar(g, start, goal)
+
+#Backward A Star
+#path,expCells = repeatedBackwardAStar.repeatedAStar(g, start, goal)
+
+#Adaptive A Star
+#path,expCells = repeatedAdaptiveAStar.repeatedAStar(g, start, goal)
+
 t1 = time.time()
 
 if(path):
     path = [(start.row,start.column)] + path
-print path,'Time taken : %f' %(t1-t0) 
+print 'Time taken : %f' %(t1-t0),' Expanded Cells : %f' %(expCells) 
 if(not path):
-    print  'No path'
+    print  'No path',' Time taken : %f' %(t1-t0),' Expanded Cells : %f' %(expCells) 
 
 g.printGrid((start.row,start.column),(goal.row,goal.column),path)
-
 
 #start = cell.cell(75,90)
 
 #goal = cell.cell(15,20)
-
+""""
 openSet = priorityQueue.PriorityQueue()
 
 openSet.put((5,5),4)
@@ -118,7 +128,7 @@ openSet.get()
 heapq.heapify(openSet.elements) 
 openSet.put((5,5),0)
 print openSet.elements
-
+"""
 #t = openSet.get()
 
 #print t
