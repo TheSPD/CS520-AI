@@ -5,6 +5,10 @@ Created on 07-Feb-2016
 @Ruid: 169005770
 '''
 
+"""
+Program to generate 50 101x101 Maps. 
+"""
+
 import grid
 import pickle
 

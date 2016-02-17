@@ -9,10 +9,15 @@ import adaptiveAStarPath
 import grid
 
 def repeatedAStar(origMap,start,goal):
+    """
+    Implementation of Repeated Forward Adaptive algorithm
+    """
     agentMap = grid.grid(origMap.size,origMap.width,origMap.height,origMap.margin)
     agentPos = start
     path = []
     expandedCells = 0
+    
+    #For Adaptive A*
     h_new = {}
     
     while not (agentPos.row == goal.row and agentPos.column == goal.column):
@@ -22,7 +27,7 @@ def repeatedAStar(origMap,start,goal):
                 if(neighbor.isBlocked()):
                     agentMap.getCell(neighbor.row, neighbor.column).setBlocked(True)
 
-            #Calculate best path as per available input
+            #Calculate best path as per available input. also update the h_new
             bestPath,aStarExpandedCells,h_new = adaptiveAStarPath.aStar(agentMap, agentPos, goal,h_new)
             expandedCells = expandedCells + aStarExpandedCells
             

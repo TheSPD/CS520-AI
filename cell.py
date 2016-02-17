@@ -7,7 +7,8 @@ Created on 03-Feb-2016
 
 
 class cell(object):
-    """A cell in a grid. Cells have the
+    """
+    A cell in a grid. Cells have the
     following properties:
 
     Attributes:
@@ -15,15 +16,21 @@ class cell(object):
     """
 
     def __init__(self,r,c):
-        """Return a cell object with initial values."""
+        """
+        Return a cell object with initial values.
+        """
         self.row = r
         self.column = c
         self.blocked = False
         
     def setBlocked(self,value):
-        """Sets the cell blocked value"""
+        """
+        Sets the cell blocked value
+        """
         self.blocked = value
         
     def isBlocked(self):
-        """Returns the value of blocked"""
+        """
+        Returns the value of blocked
+        """
         return self.blocked

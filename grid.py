@@ -12,7 +12,9 @@ import random
 class grid(object):
     
     def __init__(self,size,width,height,margin):
-        """Return a grid object with initial values.""" 
+        """
+        Return a grid object with initial values.
+        """ 
         
         self.Matrix = []
         for row in range(size):
@@ -22,19 +24,21 @@ class grid(object):
             for column in range(size):
                 self.Matrix[row].append(cell.cell(row,column))  # Append a cell
 
-        
-        """self.Matrix = [[cell() for x in range(size)] for x in range(size)]"""
         self.size = size
         self.width=width
         self.height=height
         self.margin=margin
     
     def getCell(self,r,c):
-        """Return a cell object from row r and column c"""
+        """
+        Return a cell object from row r and column c
+        """
         return self.Matrix[r][c]  
 
     def printGrid(self,start=(),goal=(),path=[]):
-        """Prints grid in a window"""      
+        """
+        Prints grid in a window using pygame
+        """      
          
         # Define some colors
         BLACK = (0, 0, 0)
@@ -132,39 +136,53 @@ class grid(object):
             
             pygame.display.flip()
             
-            # Limit to 60 frames per second
-            clock.tick(2)
+            # Limit to 10 frames per second
+            clock.tick(10)
  
         # Be IDLE friendly.
         # on exit.
         pygame.quit()
 
     def left(self,cell):
+        """
+        Returns the left neighbor of the cell
+        """
         if(cell.column >= 1):
             return self.getCell(cell.row,cell.column-1)
         else:
             return None
     
     def right(self,cell):
+        """
+        Returns the right neighbor of the cell
+        """
         if(cell.column < self.size-1):
             return self.getCell(cell.row,cell.column+1)
         else:
             return None
     
     def up(self,cell):
+        """
+        Returns the upper neighbor of the cell
+        """
         if(cell.row >= 1):
             return self.getCell(cell.row-1,cell.column)
         else:
             return None
     
     def down(self,cell):
+        """
+        Returns the lower neighbor of the cell
+        """
         if(cell.row < self.size-1):
             return self.getCell(cell.row+1,cell.column)
         else:
             return None
 
     def generate(self):
-        """generates the grid using DFS"""
+        """
+        Generates the grid using DFS
+        """
         visited = []
         
         #Change this to arbitrary
@@ -177,17 +195,7 @@ class grid(object):
             visited.append([])
             for column in range(self.size):
                 visited[row].append(0)  # Append a cell
-                
-        count = 0
-        #Text display of grid        
-        """
-        print 'Before Traversal:',count
-        for row in range(self.size):
-            print '\n'
-            for column in range(self.size):
-                print visited[row][column],
-        """
-        
+                   
     
         #Traversal
         while nodes_stack:
@@ -196,7 +204,6 @@ class grid(object):
             #Probability of 70% being unblocked 
             if(random.randint(0,99) >= 70):
                 curNode.setBlocked(True)
-                count += 1
             
             #set visited to True    
             visited[curNode.row][curNode.column] = 1
@@ -218,17 +225,11 @@ class grid(object):
                 if(not visited[curNode.row+1][curNode.column]):
                     nodes_stack.append(self.down(curNode))
                     visited[curNode.row+1][curNode.column] = 1
-                    
-        #Text display of grid
-        """
-        print 'After Traversal: ',count                    
-        for row in range(self.size):
-            print '\n'
-            for column in range(self.size):
-                print visited[row][column],
-        """
     
     def neighbors(self,cell):
+        """
+        Returns the adjacent neighbors as a list
+        """
         neighbors = []
         
         if(self.up(cell)):

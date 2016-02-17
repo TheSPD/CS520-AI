@@ -9,6 +9,10 @@ import aStarPath
 import grid
 
 def repeatedAStar(origMap,start,goal):
+    """
+    Implementation of Repeated Forward A* algorithm
+    """
+    
     agentMap = grid.grid(origMap.size,origMap.width,origMap.height,origMap.margin)
     agentPos = start
     path = []
@@ -37,4 +41,4 @@ def repeatedAStar(origMap,start,goal):
             #recordPath
             path.append(bestPath[l])
             
-    return path,expandedCells 
+    return path,expandedCells
